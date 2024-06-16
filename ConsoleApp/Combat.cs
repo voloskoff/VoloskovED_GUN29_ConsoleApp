@@ -109,6 +109,7 @@ namespace ConsoleApp
                     ratesCombat[i]._unitCombat.Damage, ratesCombat[i]._unitCombat.Health);
             }
 
+
         }
 
     }
