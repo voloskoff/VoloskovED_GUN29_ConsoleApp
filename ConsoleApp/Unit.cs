@@ -1,24 +1,29 @@
-﻿namespace Classes
+﻿using System;
+
+namespace Classes
 {
     public class Unit
     {
         private float _health = 0;
         private float _baseDamage = 5f;
-        private Helm _armorHelm;
-        private Shell _armorShell;
-        private Boots _armorBoots;
-        private Weapon _weapon;
+        private float _damage;
+        private Helm _armorHelm = new Helm("");
+        private Shell _armorShell = new Shell("");
+        private Boots _armorBoots = new Boots ("");
+        private Weapon _weapon = new Weapon("");
 
-        public string Name { get; } 
-        public float Health { get { return _health; } }
-        public float Damage
-        {
-            get 
-            {
-                Weapon weapon = new Weapon("FighterWeapon");
-                return weapon.Damage + _baseDamage; 
-            }
-        } 
+        public string Name { get; set; } 
+        public float Health { get { return _health; } set { _health = value; } }
+        //public float Damage
+        //{
+        //    get 
+        //    {                
+        //        _damage = _weapon.Damage + _baseDamage;
+        //        Console.WriteLine("_damage = {0}", _weapon.Damage);
+        //        return _damage;
+        //    }
+        //} 
+        public float Damage => _damage = _baseDamage + _weapon.GetDamage();
 
         public float Armor
         {
@@ -28,42 +33,38 @@
                 if (armor < 0) armor = 0;
                 if (armor >= 1) armor = 1;
                 return armor;
-                //return _armorHelm.ArmorHelm + _armorShell.ArmorShell + _armorBoots.ArmorBoots;
+                
             }
         }
 
-        public Unit() : this("Unknown Unit")
+        public Unit() : this("Unknown Unit", 10)
         {
 
         }
-        public Unit(string unitName)
-        {
-            Name = unitName;
-        }
+        
         public Unit(string unitName, float unitHealth)
         {
-            Name = unitName;
+            this.Name = unitName;
             _health = unitHealth;
         }
 
         public float RealHealth()
         {
-            _health = Health * (1f /*+ Armor*/);
-           // Console.WriteLine("Здоровье Юнита щас {0}",_health);
+            _health = Health * (1f + Armor);
             return _health;
         }
-        public void SetDamage(float damage)
+        public bool SetDamage(float damage)
         {
 
-            _health = _health - damage /** Armor*/;
+            _health = _health - damage * Armor;
             if (_health <= 0f)
             {
-                Console.WriteLine("Здоровье Юнита меньше 0");
-                //return true;
+                //Console.WriteLine("Здоровье Юнита меньше 0");
+                return true;
             }
             else
             {
-                //return false;
+                return false;
             }
         }
         public void EquipWeapon(Weapon weapon)

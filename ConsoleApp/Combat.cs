@@ -1,6 +1,6 @@
-﻿using Classes;
+﻿
 
-namespace ConsoleApp
+namespace Classes
 {
     public struct Interval
     {
@@ -32,19 +32,29 @@ namespace ConsoleApp
         {
             get
             {
-                return (_minCombatValue + _minCombatValue) / 2;
+                //Console.WriteLine("MinCombatValue-{0} MaxCombatValue-{1}", MinCombatValue, MaxCombatValue);
+                return (MinCombatValue + MaxCombatValue) / 2;
             }
         }
         public Interval(int minIntValue, int maxIntValue) : this((float)minIntValue, (float)maxIntValue)
         {
-
+            _minCombatValue = minIntValue;
+            _maxCombatValue = maxIntValue;
+            if (minIntValue > maxIntValue) 
+            { 
+                minIntValue = maxIntValue; 
+            }
         }
         public Interval(float minFloatValue, float maxFloatValue)
         {
             _minCombatValue = minFloatValue;
             _maxCombatValue = maxFloatValue;
+            if (minFloatValue > maxFloatValue) 
+            { 
+                minFloatValue = maxFloatValue; 
+            }
         }
-        public Interval(float value) : this(value, value)
+        public Interval(float value) : this((float)value, (float)value)
         {
 
         }
@@ -70,47 +80,41 @@ namespace ConsoleApp
     }
     public class Combat
     {
-        private List<Rate> ratesCombat;
-        //private int _indexRateCombat= 0;
+        private List<Rate> Rate = new List<Rate> ();
+
         public Combat()
         {
-            //ratesCombat = new Rate[_indexRateCombat];
-            List<Rate> ratesCombat = new List<Rate>();
-
+            
+            //List<Rate> Rate;
         }
-        public void StartCombat(Unit fighterFirst, Unit fighterSecond, float damageFirstFighter, float damageSecondFighter)
+        public void StartCombat(Unit playerOne, Unit playerTwo)
         {
-            while (fighterFirst.Health > 0 || fighterSecond.Health > 0)
+            while (playerOne.Health > 0 || playerTwo.Health > 0)
             {
                 Random rnd = new Random();
                 var rndValue = rnd.Next(1, 10);
                 if (rndValue % 2 == 0)
-                {
-                    Console.WriteLine("tyt1");
-                    fighterFirst.SetDamage(damageFirstFighter);
-                    //ratesCombat.Add(new Rate(fighterFirst, damageFirstFighter, fighterFirst.Health));
-
-
+                {   
+                    playerOne.SetDamage (playerTwo.Damage);
+                    Rate.Add(new Rate(playerTwo, playerTwo.Damage, playerTwo.Health));
                 }
                 else
                 {
-                    Console.WriteLine("tyt2");
-                    fighterSecond.SetDamage(damageSecondFighter);
-                    //ratesCombat.Add(new Rate(fighterSecond, damageSecondFighter, fighterSecond.Health));
+                    playerTwo.SetDamage(playerOne.Damage);
+                    Rate.Add(new Rate(playerOne, playerOne.Damage, playerOne.Health));
                 }
             }
             return;
         }
         public void ShowResult()
         {
-            for (int i = 0; i < ratesCombat.Count; i++)
+            for (int i = 0; i < Rate.Count; i++)
             {
-                Console.WriteLine("Боец {0} нанёс урон {1} и оставил {2} здоровья", ratesCombat[i]._unitCombat.Name,
-                    ratesCombat[i]._unitCombat.Damage, ratesCombat[i]._unitCombat.Health);
+                Console.WriteLine("Боец {0} нанёс урон {1} и оставил {2} здоровья", Rate[i]._unitCombat.Name, Rate[i]._unitCombat.Damage, Rate[i]._unitCombat.Health);
             }
-
-
         }
 
     }
+
+
 }
