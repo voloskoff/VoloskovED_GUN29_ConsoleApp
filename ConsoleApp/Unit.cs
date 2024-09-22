@@ -14,16 +14,17 @@ namespace Classes
 
         public string Name { get; set; } 
         public float Health { get { return _health; } set { _health = value; } }
-        //public float Damage
-        //{
-        //    get 
-        //    {                
-        //        _damage = _weapon.Damage + _baseDamage;
-        //        Console.WriteLine("_damage = {0}", _weapon.Damage);
-        //        return _damage;
-        //    }
-        //} 
-        public float Damage => _damage = _baseDamage + _weapon.GetDamage();
+        public float Damage
+        {
+            get
+            {
+                _damage = _weapon.Damage + _baseDamage;
+                //Console.WriteLine("_damage = {0}", _weapon.Damage);
+                return _damage;
+            }
+            
+        }
+
 
         public float Armor
         {

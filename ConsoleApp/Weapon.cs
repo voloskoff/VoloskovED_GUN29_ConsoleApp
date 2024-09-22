@@ -3,6 +3,7 @@ namespace Classes
 {
     public class Weapon
     {
+        private float _damage;
         private float _minDamage;
         private float _maxDamage;
         private Interval _interval;
@@ -51,14 +52,16 @@ namespace Classes
             {
                 MinDamage = MaxDamage;
             }
+            Console.WriteLine("MinCombatValue-{0} MaxCombatValue-{1}", minDamage, maxDamage);
             Interval SetDamage = new Interval(minDamage, maxDamage);            
 
         }
         
         public float GetDamage()
         {
-           // Console.WriteLine("Средний урон оружия будет равен {0} попугаев", _interval.AverageCombatValue);
-            return _interval.AverageCombatValue;
+            // Console.WriteLine("Средний урон оружия будет равен {0} попугаев", _interval.AverageCombatValue);
+            _damage = _interval.AverageCombatValue;
+            return _damage;
         }
 
     }
