@@ -42,11 +42,11 @@ namespace Classes
             Console.WriteLine("Второй игрок: {0} - здоровья, {1} - урон", playerTwo.RealHealth(), playerTwo.Damage);
 
 
-            //Combat combat = new Combat();
-            //Console.WriteLine("Начало боя");
-            //combat.StartCombat(playerOne, playerTwo);
-            //Console.WriteLine("Конец");
-            //combat.ShowResult();
+            Combat combat = new Combat();
+            Console.WriteLine("Начало боя");
+            combat.StartCombat(playerOne, playerTwo);
+            Console.WriteLine("Конец");
+            combat.ShowResult();
 
 
 
